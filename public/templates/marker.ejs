@@ -1,0 +1,10 @@
+<div class="marker-wrapper">
+  <% if (typeof(name) != null) { %>
+    <div class="marker-title">
+      <%= name %>
+    </div>
+  <% } %>
+  <% if (typeof(iconUrl) != null) { %>
+    <img src="<%= iconUrl %>" />
+  <% } %>
+</div>
