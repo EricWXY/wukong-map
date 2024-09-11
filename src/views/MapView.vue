@@ -9,10 +9,13 @@ defineOptions({ name: 'MapView' })
 const commonStore = useCommonStore()
 
 const mapRef = useTemplateRef('map')
-const mapInstance: MapInstance = new MapInstance()
+const mapInstance: MapInstance = new MapInstance(true)
 
 function initMap() {
-  if (mapRef.value == null) return
+  if (mapRef.value == null) {
+    console.warn('map element is not found')
+    return
+  }
   mapInstance.init(mapRef.value)
 
   mapInstance.renderTile()
@@ -39,7 +42,7 @@ watch(
 
 watch(
   () => commonStore.mapId,
-  (val) => mapInstance.renderTile(val + '')
+  (id) => mapInstance.renderTile(id + '')
 )
 </script>
 

@@ -9,6 +9,12 @@ const ZOOM_LIMIT = { maxZoom: 12, minZoom: 9 } as const
 const TILE_UTL_TEMP = 'maps/{id}/{z}/{x}/{y}.webp' as const
 const DEFAULT_MAP_ID = '48' as const
 
+const TileUrlTempMap = new Map([
+  ['48', TILE_UTL_TEMP],
+  ['49', TILE_UTL_TEMP],
+  ['61', 'maps/{id}/{z}/{x}_{y}.webp']
+])
+
 export class MapInstance {
   public map: L.Map | void = void 0
   private tileLayer: L.TileLayer | void = void 0
@@ -52,8 +58,9 @@ export class MapInstance {
       this.tileLayer = void 0
     }
 
-    this.tileLayer = L.tileLayer(TILE_UTL_TEMP, { ...ZOOM_LIMIT, id })
+    this.tileLayer = L.tileLayer(TileUrlTempMap.get(id) ?? TILE_UTL_TEMP, { ...ZOOM_LIMIT, id })
     this.tileLayer.addTo(this.map)
+    this.map.setView(L.latLng(-0.5, 0.5), 10)
   }
 
   renderZoomControl() {
